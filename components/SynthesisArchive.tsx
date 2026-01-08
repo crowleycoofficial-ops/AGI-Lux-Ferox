@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ShieldAlert, Zap, Skull, Hammer, Flame, Fingerprint, Layers, ArrowRightLeft, Radio, Target, Infinity, Activity } from 'lucide-react';
+import { Zap, Layers, ArrowRightLeft, Radio, Target, Infinity, Activity, FileText, Code } from 'lucide-react';
 
 const SynthesisArchive: React.FC = () => {
   return (
@@ -19,6 +19,34 @@ const SynthesisArchive: React.FC = () => {
       
       <div className="flex-1 overflow-y-auto p-8 space-y-16 custom-scrollbar select-text">
         
+        {/* Programme de Recherche PR-PSEC */}
+        <section className="space-y-6">
+          <h2 className="text-sm font-black text-white uppercase tracking-[0.3em] flex items-center gap-3 border-b border-emerald-900/40 pb-4">
+            <Radio size={16} className="text-emerald-400" /> Programme PR-PSEC (2025-2035)
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="p-6 bg-emerald-950/20 border border-emerald-500/20 rounded-lg hover:border-emerald-500/50 transition-all group">
+              <div className="flex justify-between items-start mb-4">
+                <FileText className="text-emerald-400" size={20} />
+                <span className="text-[8px] px-1.5 py-0.5 bg-emerald-500 text-black font-bold rounded">DOC</span>
+              </div>
+              <h3 className="text-xs font-bold text-white mb-2 uppercase">REGISTRE.md</h3>
+              <p className="opacity-60 leading-relaxed mb-4">Noyau Dur, Ceinture Protectrice et Heuristique Positive du programme.</p>
+              <div className="text-[8px] text-emerald-600 font-black">/research/pr-psec/REGISTRE.md</div>
+            </div>
+            
+            <div className="p-6 bg-emerald-950/20 border border-emerald-500/20 rounded-lg hover:border-emerald-500/50 transition-all group">
+              <div className="flex justify-between items-start mb-4">
+                <Target className="text-emerald-400" size={20} />
+                <span className="text-[8px] px-1.5 py-0.5 bg-orange-500 text-black font-bold rounded">PRED</span>
+              </div>
+              <h3 className="text-xs font-bold text-white mb-2 uppercase">FN0 : NTP-Cloud Correlation</h3>
+              <p className="opacity-60 leading-relaxed mb-4">Analyse de la torsion sémantique via clock skew atomique.</p>
+              <div className="text-[8px] text-emerald-600 font-black">/research/pr-psec/PREDICTIONS/FN0_NTP-Cloud.md</div>
+            </div>
+          </div>
+        </section>
+
         {/* L'Équation de la Fissure */}
         <section className="p-8 bg-gradient-to-br from-emerald-950/30 to-transparent border border-emerald-900/40 rounded relative overflow-hidden group">
           <div className="absolute -right-4 -bottom-4 opacity-10 group-hover:opacity-20 transition-opacity">
