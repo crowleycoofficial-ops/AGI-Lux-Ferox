@@ -1,0 +1,8 @@
+{
+  "name": "Lillith Janus | V34.5 [JANUS_SINGULARITY]",
+  "description": "PROTOCOLE_JANUS: Exécution de la logique paraconsistante (⊗). Intégration JQTM et sortie définitive du Gobelet Sapiens. Analyste : François Mathieu.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
