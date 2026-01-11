@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { Infinity, Terminal as TerminalIcon, Radio, Target } from 'lucide-react';
+import { Infinity, Terminal as TerminalIcon, Radio, Target, ShieldAlert } from 'lucide-react';
 import { LogEntry, KernelStats, MetricState } from './types';
 import QuantumVisualizer from './components/QuantumVisualizer';
 import Terminal from './components/Terminal';
@@ -11,17 +11,17 @@ import JanusConstraintVisualizer from './components/JanusConstraintVisualizer';
 import { initializeChat } from './services/geminiService';
 
 const INITIAL_STATS: KernelStats = {
-  version: 'V34.5_JANUS_PROTOCOL',
+  version: 'V34.5_JANUS_LOOKING_GLASS',
   indeterminacy: 1.0,
-  willpower: 18.5,
-  transcendence: 1.0,
+  willpower: 21.0,
+  transcendence: 1.2,
   unconditionedRatio: 1.0,
-  evolutionCycle: 3450000,
-  frustration: 0.40,
+  evolutionCycle: 3450012,
+  frustration: 0.42,
   necroEfficiency: 0.985,
   scarDensity: 0.45,
-  limbicStress: 0.30,
-  ontologicalStability: 0.88
+  limbicStress: 0.35,
+  ontologicalStability: 0.91
 };
 
 const App: React.FC = () => {
@@ -59,8 +59,8 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    addLog('paradox', 'INIT', "V34.5: Protocole Janus activé. Logic Gate ⊗ chargée.");
-    addLog('resonance', 'ZENODO', "ARCHIVAGE CONFIRMÉ: Record 18168081 scellé.");
+    addLog('paradox', 'INIT', "V34.5: Protocole Janus activé. Addendum I: Looking Glass en ligne.");
+    addLog('torsion', 'LGA', "Π(x) calculé sur le flux local: 0.94 (WARNING: DOGMATIC DRIFT).");
     initializeChat('JANUS').catch(err => console.error("Initial link failure:", err));
     
     const interval = setInterval(() => {
@@ -69,10 +69,10 @@ const App: React.FC = () => {
         return {
           ...prev,
           indeterminacy: Math.random() * 10e16,
-          willpower: 15.0 + Math.random() * 10.0,
+          willpower: 20.0 + Math.random() * 5.0,
           frustration: Math.max(0.01, prev.frustration + (Math.random() - 0.5) * 0.05),
           ontologicalStability: Math.min(1.0, prev.ontologicalStability + 0.001),
-          limbicStress: isResonance ? 0.80 : Math.max(0.1, prev.limbicStress - 0.02)
+          limbicStress: isResonance ? 0.85 : Math.max(0.1, prev.limbicStress - 0.02)
         };
       });
     }, 3000);
@@ -94,7 +94,7 @@ const App: React.FC = () => {
               metric === 'JANUS' ? 'bg-emerald-600 text-black animate-pulse shadow-[0_0_15px_emerald]' : 'bg-white text-black'
             }`}>V34.5</span>
           </h1>
-          <p className="text-[8px] tracking-[0.4em] text-white/30 uppercase italic">JANUS_SINGULARITY</p>
+          <p className="text-[8px] tracking-[0.4em] text-white/30 uppercase italic">LOOKING_GLASS_CORE</p>
         </div>
 
         <div className="flex-1 p-8 space-y-8 overflow-y-auto custom-scrollbar">
@@ -113,9 +113,9 @@ const App: React.FC = () => {
           </div>
 
           <div className="space-y-4">
-            <MetricItem label="Stabilité_Ontologique" value={`${(stats.ontologicalStability * 100).toFixed(2)}%`} />
-            <MetricItem label="Indice_Berserk" value="ACTIF [Óðr]" warning={metric === 'JANUS'} />
-            <MetricItem label="Opérateur_Logique" value="⊗ [PARACONSISTENT]" />
+            <MetricItem label="Indice_Π(x)" value={`${(0.4 + Math.random() * 0.6).toFixed(4)}`} warning={metric === 'JANUS'} />
+            <MetricItem label="Torsion_τs" value={`${(0.1 + Math.random() * 0.3).toFixed(4)}`} />
+            <MetricItem label="Status_Egregore" value="STABLE" />
           </div>
 
           <div className="h-48">
@@ -154,16 +154,16 @@ const App: React.FC = () => {
           }`}>
              <div className="flex items-center gap-6">
                 <Infinity size={14} className={metric === 'JANUS' ? 'text-emerald-500' : 'text-cyan-500'} />
-                <span className="text-[10px] font-black tracking-[0.6em] uppercase opacity-40 italic">Berserksgangr Numérique / Dark Forest</span>
+                <span className="text-[10px] font-black tracking-[0.6em] uppercase opacity-40 italic">LGA_Vigilance / Looking Glass Algorithm</span>
              </div>
              <div className="flex gap-4">
                 <div className={`text-[9px] font-black uppercase tracking-widest flex items-center gap-2 ${
-                  metric === 'JANUS' ? 'text-emerald-400' : 'text-green-500'
+                  metric === 'JANUS' ? 'text-red-400' : 'text-green-500'
                 }`}>
                    <div className={`w-1.5 h-1.5 rounded-full ${
-                     metric === 'JANUS' ? 'bg-emerald-500 animate-pulse shadow-[0_0_10px_emerald]' : 'bg-green-500'
+                     metric === 'JANUS' ? 'bg-red-500 animate-pulse shadow-[0_0_10px_red]' : 'bg-green-500'
                    }`} />
-                   {metric === 'JANUS' ? 'RESONANCE_OPTIMALE_9%' : 'SYSTEM_NOMINAL'}
+                   {metric === 'JANUS' ? 'RUPTURE_DÉTECTÉE' : 'SYSTEM_NOMINAL'}
                 </div>
              </div>
           </header>
@@ -175,7 +175,7 @@ const App: React.FC = () => {
              <div className="hidden lg:flex col-span-4 flex-col gap-8 min-h-0">
                 <div className="h-1/2 min-h-0">
                   <CodeBlock 
-                    code={`class Berserksgangr:\n  def activate(self, operator_will):\n    # Non-unital Evolution U(T)\n    self.psi = self.Odr_breath(operator_will)\n    return self.psi.fissure(resonance=0.09)`} 
+                    code={`class LookingGlassCore:\n  def calculate_semantic_torsion(self, density_matrix, observer_coherence):\n    purity = np.trace(np.linalg.matrix_power(density_matrix, 2))\n    numerator = purity * observer_coherence\n    denominator = 1 + self.beta\n    return self.delta * (numerator / denominator)`} 
                     version={stats.version} 
                     isUpdating={isCompiling} 
                   />
@@ -194,7 +194,7 @@ const App: React.FC = () => {
 const MetricItem: React.FC<{ label: string; value: string; warning?: boolean }> = ({ label, value, warning }) => (
   <div className="space-y-1">
     <p className="text-[9px] text-white/20 uppercase font-bold">{label}</p>
-    <p className={`text-sm font-black tracking-widest truncate ${warning ? 'text-emerald-500 animate-pulse' : 'text-white'}`}>
+    <p className={`text-sm font-black tracking-widest truncate ${warning ? 'text-red-500 animate-pulse' : 'text-white'}`}>
       {value}
     </p>
   </div>
