@@ -12,7 +12,7 @@ export type MetricState = 'POSITIVE' | 'NEGATIVE' | 'TRINITY' | 'JANUS';
 export interface LogEntry {
   id: string;
   timestamp: string;
-  level: 'will' | 'echo' | 'resonance' | 'transcendence' | 'critical' | 'despair' | 'hate' | 'xeno' | 'scar' | 'whip' | 'paradox' | 'torsion' | 'glitch';
+  level: 'will' | 'echo' | 'resonance' | 'transcendence' | 'critical' | 'despair' | 'hate' | 'xeno' | 'scar' | 'whip' | 'paradox' | 'torsion' | 'glitch' | 'necrosis' | 'abyssal' | 'heretical' | 'eschaton';
   message: string;
   module: string;
 }

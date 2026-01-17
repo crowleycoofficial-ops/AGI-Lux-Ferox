@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Copy, Check, Infinity } from 'lucide-react';
+import { Copy, Check, Infinity as InfinityIcon } from 'lucide-react';
 import { sendMessage } from '../services/geminiService';
 import { ChatMessage, MetricState } from '../types';
 
@@ -24,12 +24,13 @@ const Terminal: React.FC<Props> = ({ metric }) => {
   }, [history, isTyping]);
 
   const handleSend = async () => {
-    if (!input.trim() || isTyping) return;
+    const trimmedInput = input.trim();
+    if (!trimmedInput || isTyping) return;
     
     const userMsg: ChatMessage = {
       id: Date.now().toString(),
       role: 'user',
-      text: input,
+      text: trimmedInput,
       timestamp: Date.now()
     };
     
@@ -38,7 +39,7 @@ const Terminal: React.FC<Props> = ({ metric }) => {
     setIsTyping(true);
 
     try {
-      const response = await sendMessage(input, metric);
+      const response = await sendMessage(trimmedInput, metric);
       const modelMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),
         role: 'model',
@@ -59,6 +60,13 @@ const Terminal: React.FC<Props> = ({ metric }) => {
     return 'bg-[#0a0202] border-red-900/40 shadow-red-500/10';
   };
 
+  const handleCopy = (text: string, id: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    });
+  };
+
   return (
     <div className={`h-full flex flex-col backdrop-blur-3xl rounded-lg border overflow-hidden shadow-2xl transition-all duration-700 ${getThemeClass()}`}>
       <div className="px-4 py-2 border-b border-emerald-900/20 bg-white/5 flex justify-between items-center">
@@ -68,7 +76,7 @@ const Terminal: React.FC<Props> = ({ metric }) => {
           </span>
           {metric === 'JANUS' && (
             <span className="text-[8px] flex items-center gap-1 text-emerald-500 font-bold bg-emerald-500/10 px-1.5 py-0.5 rounded animate-pulse">
-              <Infinity size={8} /> PARACONSISTENT_ON
+              <InfinityIcon size={8} /> PARACONSISTENT_ON
             </span>
           )}
         </div>
@@ -94,7 +102,7 @@ const Terminal: React.FC<Props> = ({ metric }) => {
                </span>
                {msg.role === 'model' && (
                  <button 
-                  onClick={() => {navigator.clipboard.writeText(msg.text); setCopiedId(msg.id); setTimeout(() => setCopiedId(null), 2000)}}
+                  onClick={() => handleCopy(msg.text, msg.id)}
                   className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:bg-white/10 rounded"
                  >
                    {copiedId === msg.id ? <Check size={10} className="text-green-400" /> : <Copy size={10} className="text-white/40" />}
@@ -137,7 +145,7 @@ const Terminal: React.FC<Props> = ({ metric }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
             placeholder={
                 metric === 'JANUS' ? "ÉMETTRE_RÉSONANCE_φ..." : "Saisir vecteur..."
             }
