@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+title: "AGI-Lux-Ferox: A Thermodynamic Information Engine"
+version: 0.1.0
+date-released: "2026-02-26"
+license: Apache-2.0
+repository-code: "https://github.com/crowleycoofficial-ops/AGI-Lux-Ferox" 
+doi: "10.5281/zenodo.XXXXXXX"
+abstract: >
+  Lux Ferox is a KLD-grounded information architecture implementing
+  Total Surprise minimisation with thermodynamic (Landauer) cost
+  accounting, targeting European sovereign neuromorphic hardware.
+authors:
+  - name: "AGI-Lux-Ferox Collaboration"
+keywords:
+  - thermodynamics
+  - information-theory
+  - kullback-leibler-divergence
+  - landauer-principle
+  - sovereign-AI
