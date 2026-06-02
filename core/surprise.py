@@ -208,8 +208,9 @@ if __name__ == "__main__":
     print("\\nTest 3: Uniform model vs. skewed observations")
     print(f"  S_total:       {result_moderate['S_total']:.6f} bits")
     print(f"  W_min:         {result_moderate['W_min_joules']:.6e} J")
-    assert 0 < result_moderate["S_total"] < result_divergent["S_total"], \\
+    assert 0 < result_moderate["S_total"] < result_divergent["S_total"], (
         "Moderate divergence must be between 0 and maximal divergence"
+    )
     print("  PASSED")
 
     # Test 4: Temperature scaling - W_min scales linearly with T
