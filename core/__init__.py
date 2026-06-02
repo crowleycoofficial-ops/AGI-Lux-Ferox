@@ -3,6 +3,14 @@ AGI-Lux-Ferox · Core Package
 Thermodynamic information engine — KLD / Landauer primitives.
 """
 
+from .audit import AuditEvent, AuditLedger
+from .connectors import ConnectorResult, DryRunConnector, FileOutboxConnector
+from .controller import PhysicalOODAController, PhysicalOODAResult
+from .guardian import HardScienceGuardian, SignalDecision
+from .policy import OODAControlPolicy, PolicyDecision, PolicyEngine
+from .report import AuthorReport, ReportBuilder
+from .simulation import AdversarialPressure, CampaignSimulator, SimulationResult, SyntheticAudience
+from .state import JSONLStateStore, SQLiteStateStore, persist_operational_snapshot
 from .guardian import HardScienceGuardian, SignalDecision
 from .promotion import (
     AudienceSegment,
@@ -19,6 +27,25 @@ from .promotion import (
 
 __all__ = [
     "calculate_surprise",
+    "AuditEvent",
+    "AuditLedger",
+    "ConnectorResult",
+    "DryRunConnector",
+    "FileOutboxConnector",
+    "PhysicalOODAController",
+    "PhysicalOODAResult",
+    "OODAControlPolicy",
+    "PolicyDecision",
+    "PolicyEngine",
+    "AuthorReport",
+    "ReportBuilder",
+    "AdversarialPressure",
+    "CampaignSimulator",
+    "SimulationResult",
+    "SyntheticAudience",
+    "JSONLStateStore",
+    "SQLiteStateStore",
+    "persist_operational_snapshot",
     "HardScienceGuardian",
     "SignalDecision",
     "AudienceSegment",

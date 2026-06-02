@@ -138,3 +138,85 @@ print(cycle.decision)
 ```bash
 python core/surprise.py
 ```
+
+## Industrial OODA Toolkit
+
+The advanced control layer adds the pieces needed to run Lux Ferox as a
+human-supervised operational loop without direct social-network automation:
+
+- `AuditLedger` records consent, OODA, dispatch, and feedback events as a
+  hash-chained audit trail.
+- `JSONLStateStore` and `SQLiteStateStore` persist consent receipts, queued
+  messages, dispatch records, feedback, and audit events.
+- `OODAControlPolicy` and `PolicyEngine` turn feedback and physical guard state
+  into explicit `CONTINUE`, `SLOW_DOWN`, `PAUSE`, or `REQUIRE_REVIEW` decisions.
+- `DryRunConnector` and `FileOutboxConnector` stage connector-ready records for
+  approved external publication flows without logging in or posting directly.
+- `CampaignSimulator` tests campaigns against synthetic audiences and optional
+  adversarial pressure before any real connector is used.
+- `PhysicalOODAController` fuses `HardScienceGuardian` with `PromotionAgent` so
+  compute overload or aliasing risk can slow or pause the OODA loop.
+- `ReportBuilder` emits author-facing text, Markdown, and JSON reports.
+
+```python
+from datetime import datetime, timezone
+from core import (
+    AdversarialPressure,
+    AuditLedger,
+    CampaignSimulator,
+    DryRunConnector,
+    FileOutboxConnector,
+    HardScienceGuardian,
+    OODAControlPolicy,
+    PhysicalOODAController,
+    PolicyEngine,
+    ReportBuilder,
+    SQLiteStateStore,
+    SyntheticAudience,
+)
+
+ledger = AuditLedger()
+ledger.append("consent", receipt)
+
+policy = PolicyEngine(OODAControlPolicy(min_ctr_continue=0.02))
+controller = PhysicalOODAController(
+    HardScienceGuardian(threshold_load=0.85, sampling_hz=1000.0),
+    agent,
+    policy,
+)
+physical_result = controller.cycle(
+    brief,
+    [segment],
+    (),
+    compute_load=0.40,
+    arrival_hz=100.0,
+    now=datetime(2026, 6, 3, tzinfo=timezone.utc),
+)
+
+connector = DryRunConnector()
+for record in agent.dispatch_due(datetime(2026, 6, 3, tzinfo=timezone.utc)):
+    print(connector.publish(record).status)
+
+simulation = CampaignSimulator(
+    agent,
+    SyntheticAudience(size=10_000),
+    AdversarialPressure(intensity=0.25),
+).run(brief, [segment], days=7)
+print(simulation.average_sentiment)
+
+store = SQLiteStateStore("data/lux_ferox.sqlite")
+for event in ledger.events:
+    store.append("audit", event)
+
+report = ReportBuilder().build(agent.summarize_feedback(), physical_result.ooda)
+print(report.to_markdown())
+```
+
+## CLI
+
+The package also includes a small JSON-oriented CLI:
+
+```bash
+python -m core.cli guardian --compute-load 0.91 --arrival-hz 120
+python -m core.cli promote-plan --channel mastodon
+```
