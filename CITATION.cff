@@ -1,20 +1,30 @@
 cff-version: 1.2.0
-message: "If you use this software, please cite it using the metadata below."
-title: "AGI-Lux-Ferox: A Thermodynamic Information Engine"
-version: 0.1.0
-date-released: "2026-02-26"
-license: Apache-2.0
-repository-code: "https://github.com/crowleycoofficial-ops/AGI-Lux-Ferox" 
-doi: "10.5281/zenodo.XXXXXXX"
-abstract: >
-  Lux Ferox is a KLD-grounded information architecture implementing
-  Total Surprise minimisation with thermodynamic (Landauer) cost
-  accounting, targeting European sovereign neuromorphic hardware.
+message: "If you use this software or corpus, please cite it as below."
+type: software
+title: "AGI Lux Ferox — Thermodynamic Information Engine"
+version: "4.0.0"
+date-released: "2026-06-02"
 authors:
-  - name: "AGI-Lux-Ferox Collaboration"
+  - family-names: Mathieu
+    given-names: François
+    orcid: "https://orcid.org/0009-0004-1848-870X"
+    affiliation: "Lux Ferox Independent Research"
+repository-code: "https://github.com/crowleycoofficial-ops/AGI-Lux-Ferox"
+url: "https://crowleycoofficial-ops.github.io/AGI-Lux-Ferox/"
+abstract: >
+  Lux Ferox operationalises Total Surprise (S_total) as the Kullback-Leibler divergence
+  between a generative model and empirical observations, bounded below by Landauer's
+  erasure cost: W_min = k_B T ln2 · S_total. Architecture spans 5 layers from
+  holographic quantum gravity (L0) to live intelligence instances (L4).
+  Synthetic peer-review methodology: human epistemic direction + adversarial multi-LLM
+  collaboration. Explicit epistemic labelling: MEASURED / ESTIMATED / STRUCTURAL / SPECULATIVE.
 keywords:
   - thermodynamics
   - information-theory
-  - kullback-leibler-divergence
-  - landauer-principle
+  - KL-divergence
+  - Landauer
+  - neuromorphic
+  - cognitive-warfare
+  - UAP
   - sovereign-AI
+license: Apache-2.0

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lux Ferox — Carte de Forge</title>
+<style>
+  :root {
+    --forge-bg: #0a0a0c;
+    --anvil: #1a1a1f;
+    --ember: #c8500a;
+    --ember-glow: #f07030;
+    --steel: #8899aa;
+    --cold-steel: #aabbcc;
+    --spark: #f0c040;
+    --text: #d8dde3;
+    --l0: #6644cc;
+    --l1: #3388cc;
+    --l2: #228866;
+    --l3: #cc6622;
+    --l4: #aa2244;
+    --meta: #776688;
+    --border: rgba(200,80,10,0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--forge-bg);
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+    min-height: 100vh;
+    padding: 2rem 1.5rem;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+    color: var(--ember-glow);
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 20px rgba(240,112,48,0.4);
+    margin-bottom: 0.5rem;
+  }
+
+  header .tagline {
+    color: var(--steel);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .equation {
+    background: var(--anvil);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1.2rem 2rem;
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 680px;
+    color: var(--spark);
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .equation .sub {
+    color: var(--steel);
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+
+  .layer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .layer-card {
+    background: var(--anvil);
+    border-radius: 8px;
+    padding: 1.4rem;
+    border-left: 4px solid;
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default;
+  }
+
+  .layer-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  }
+
+  .layer-card.l0 { border-color: var(--l0); }
+  .layer-card.l1 { border-color: var(--l1); }
+  .layer-card.l2 { border-color: var(--l2); }
+  .layer-card.l3 { border-color: var(--l3); }
+  .layer-card.l4 { border-color: var(--l4); }
+  .layer-card.meta { border-color: var(--meta); }
+
+  .layer-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  .l0 .layer-label { color: var(--l0); }
+  .l1 .layer-label { color: var(--l1); }
+  .l2 .layer-label { color: var(--l2); }
+  .l3 .layer-label { color: var(--l3); }
+  .l4 .layer-label { color: var(--l4); }
+  .meta .layer-label { color: var(--meta); }
+
+  .layer-title {
+    font-size: 1rem;
+    color: var(--cold-steel);
+    margin-bottom: 0.8rem;
+  }
+
+  .paper-list {
+    list-style: none;
+  }
+
+  .paper-list li {
+    font-size: 0.75rem;
+    color: var(--steel);
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .paper-list li:last-child { border-bottom: none; }
+
+  .paper-name { flex: 1; }
+
+  .epi-tag {
+    font-size: 0.6rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    white-space: nowrap;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+  }
+
+  .epi-mesure  { background: rgba(40,120,60,0.3);  color: #80cc88; border: 1px solid rgba(40,180,80,0.3); }
+  .epi-estime  { background: rgba(60,100,160,0.3); color: #88aadd; border: 1px solid rgba(60,150,220,0.3); }
+  .epi-struct  { background: rgba(120,80,30,0.3);  color: #ddaa66; border: 1px solid rgba(200,130,40,0.3); }
+  .epi-spec    { background: rgba(120,30,60,0.3);  color: #dd8899; border: 1px solid rgba(180,60,90,0.3); }
+
+  .core-section {
+    background: var(--anvil);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.4rem;
+    margin-bottom: 2rem;
+  }
+
+  .core-section h2 {
+    color: var(--ember);
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .core-files {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .core-file {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 5px;
+    padding: 0.8rem;
+  }
+
+  .core-file code {
+    color: var(--spark);
+    font-size: 0.8rem;
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  .core-file p {
+    font-size: 0.72rem;
+    color: var(--steel);
+    line-height: 1.4;
+  }
+
+  .trl-bar {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    align-items: center;
+  }
+
+  .trl-step {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .trl-step.done   { background: var(--l2); }
+  .trl-step.active { background: var(--ember); animation: pulse 2s infinite; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .trl-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--steel);
+    margin-top: 0.3rem;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--steel);
+  }
+
+  footer .motto {
+    color: var(--ember-glow);
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+  }
+
+  a { color: var(--ember-glow); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚒ AGI LUX FEROX</h1>
+  <div class="tagline">THERMODYNAMIC INFORMATION ENGINE · TRL 3 → 4</div>
+  <div class="tagline" style="margin-top:0.3rem; color:#776688">
+    Lux Ferox Independent Research · Lyon, France · ORCID 0009-0004-1848-870X
+  </div>
+</header>
+
+<div class="equation">
+  W<sub>min</sub> = k<sub>B</sub> · T · ln(2) · S<sub>total</sub>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  S<sub>total</sub> = D<sub>KL</sub>(P<sub>model</sub> ‖ P<sub>obs</sub>)
+  <div class="sub">Landauer bound — coût physique minimal pour résoudre un écart informationnel</div>
+</div>
+
+<div class="layer-grid">
+
+  <div class="layer-card l0">
+    <div class="layer-label">L0 — Substrat holographique</div>
+    <div class="layer-title">Gravité quantique / UAP Physics</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">Quantum Holographic Framework (Schwinger)</span><span class="epi-tag epi-struct">STRUCT</span></li>
+      <li><span class="paper-name">Janusian Quantum Topology (JQTM)</span><span class="epi-tag epi-struct">STRUCT</span></li>
+      <li><span class="paper-name">QHF Computational Instabilities (QuTiP)</span><span class="epi-tag epi-mesure">MESURÉ</span></li>
+    </ul>
+  </div>
+
+  <div class="layer-card l1">
+    <div class="layer-label">L1 — Thermodynamique</div>
+    <div class="layer-title">Observateur / Limites biologiques</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">TCUS — Unified Field Theory Sovereign Systems</span><span class="epi-tag epi-struct">STRUCT</span></li>
+      <li><span class="paper-name">Theory of Limit States (TLS)</span><span class="epi-tag epi-spec">SPEC</span></li>
+      <li><span class="paper-name">Formal Analysis AI Architectures</span><span class="epi-tag epi-struct">STRUCT</span></li>
+    </ul>
+  </div>
+
+  <div class="layer-card l2">
+    <div class="layer-label">L2 — Hardware souverain</div>
+    <div class="layer-title">Neuromorphique / CEA-Leti · Imec · X-FAB</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">Sentinel Module (OCC, Red Noise Radar)</span><span class="epi-tag epi-mesure">MESURÉ</span></li>
+      <li><span class="paper-name">Green Fireballs → Topological Plasma (BCI-MHD)</span><span class="epi-tag epi-estime">ESTIMÉ</span></li>
+    </ul>
+  </div>
+
+  <div class="layer-card l3">
+    <div class="layer-label">L3 — Guerre cognitive</div>
+    <div class="layer-title">Boucles réflexives / HWE / LEGACY</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">LEGACY Program v65 (JQTM + Observer Cost)</span><span class="epi-tag epi-struct">STRUCT</span></li>
+      <li><span class="paper-name">LEGACY Manifesto (KingSlayer, NWOS)</span><span class="epi-tag epi-spec">SPEC</span></li>
+      <li><span class="paper-name">Satoichi Paradox (Bitcoin anomaly)</span><span class="epi-tag epi-spec">SPEC</span></li>
+    </ul>
+  </div>
+
+  <div class="layer-card l4">
+    <div class="layer-label">L4 — Instances live</div>
+    <div class="layer-title">Renseignement / Cartographie acteurs</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">AARO 2024 (AP framework)</span><span class="epi-tag epi-mesure">MESURÉ</span></li>
+      <li><span class="paper-name">Orbital DEW (HEL/HPM, Shinobi)</span><span class="epi-tag epi-estime">ESTIMÉ</span></li>
+      <li><span class="paper-name">Metric G (Benford, Dempster-Shafer)</span><span class="epi-tag epi-mesure">MESURÉ</span></li>
+      <li><span class="paper-name">PURSUE Initiative (RI, θ, MISREP)</span><span class="epi-tag epi-mesure">MESURÉ</span></li>
+    </ul>
+  </div>
+
+  <div class="layer-card meta">
+    <div class="layer-label">META — Ontologie</div>
+    <div class="layer-title">Holographic-Thermodynamic Ontology</div>
+    <ul class="paper-list">
+      <li><span class="paper-name">LF Research Collective v28 (5 couches unifiées)</span><span class="epi-tag epi-struct">STRUCT</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="core-section">
+  <h2>⚙ Noyau logiciel — /core</h2>
+  <div class="core-files">
+    <div class="core-file">
+      <code>surprise.py</code>
+      <p>calculate_surprise(p_model, p_obs, T)<br>→ S_total [bits] + W_min [joules]<br>TRL 3 ✅ validé</p>
+    </div>
+    <div class="core-file">
+      <code>guardian.py</code>
+      <p>HardScienceGuardian<br>Disjoncteur charge / Nyquist-Shannon<br>THROTTLE · DISCARD</p>
+    </div>
+    <div class="core-file">
+      <code>promotion.py</code>
+      <p>PromotionAgent + ConsentReceipt<br>Boucle OODA outreach<br>Mastodon · LinkedIn</p>
+    </div>
+  </div>
+  <div class="trl-bar">
+    <span style="font-size:0.65rem;color:#888;white-space:nowrap">TRL</span>
+    <div class="trl-step done" title="TRL 3 ✅"></div>
+    <div class="trl-step active" title="TRL 4 🔄"></div>
+    <div class="trl-step" title="TRL 5 ⏳"></div>
+    <div class="trl-step" title="TRL 6"></div>
+    <div class="trl-step" title="TRL 7"></div>
+  </div>
+  <div class="trl-labels">
+    <span>1</span><span>2</span><span>3 ✅</span><span>4 🔄</span><span>5</span><span>6</span><span>7</span>
+  </div>
+</div>
+
+<footer>
+  <div class="motto">⚒ Parole de forgeron — de gré ou de force ⚒</div>
+  <div>
+    <a href="https://github.com/crowleycoofficial-ops/AGI-Lux-Ferox">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="../ZENODO_INDEX.md">Zenodo Index (16 publications)</a>
+    &nbsp;·&nbsp;
+    <a href="https://zenodo.org/search?q=lux%20ferox&l=list&p=1&s=10&sort=bestmatch">Zenodo Archive</a>
+  </div>
+  <div style="margin-top:0.5rem">
+    Méthode : synthetic peer-review · étiquetage épistémique MESURÉ / ESTIMÉ / STRUCTUREL / SPÉCULATIF · pas de peer review institutionnel
+  </div>
+</footer>
+
+</body>
+</html>
