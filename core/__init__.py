@@ -11,6 +11,7 @@ from .policy import OODAControlPolicy, PolicyDecision, PolicyEngine
 from .report import AuthorReport, ReportBuilder
 from .simulation import AdversarialPressure, CampaignSimulator, SimulationResult, SyntheticAudience
 from .state import JSONLStateStore, SQLiteStateStore, persist_operational_snapshot
+from .guardian import HardScienceGuardian, SignalDecision
 from .promotion import (
     AudienceSegment,
     AuthorFeedbackSummary,

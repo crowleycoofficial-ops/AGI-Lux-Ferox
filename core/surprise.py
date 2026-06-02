@@ -180,7 +180,7 @@ if __name__ == "__main__":
     p_uniform = np.array([0.25, 0.25, 0.25, 0.25])
     result_identical = calculate_surprise(p_uniform, p_uniform, temperature=300.0)
     
-    print("\\nTest 1: Identical distributions (P == Q)")
+    print("\nTest 1: Identical distributions (P == Q)")
     print(f"  S_total:       {result_identical['S_total']:.6f} bits")
     print(f"  W_min:         {result_identical['W_min_joules']:.6e} J")
     assert abs(result_identical["S_total"]) < 1e-6, "KLD(P||P) must be ~0"
@@ -193,7 +193,7 @@ if __name__ == "__main__":
     p_obs_peaked   = np.array([0.01, 0.01, 0.01, 0.97])
     result_divergent = calculate_surprise(p_model_peaked, p_obs_peaked, temperature=300.0)
     
-    print("\\nTest 2: Maximally divergent distributions")
+    print("\nTest 2: Maximally divergent distributions")
     print(f"  S_total:       {result_divergent['S_total']:.6f} bits")
     print(f"  W_min:         {result_divergent['W_min_joules']:.6e} J")
     assert result_divergent["S_total"] > 0, "KLD must be positive for divergent distributions"
@@ -205,7 +205,7 @@ if __name__ == "__main__":
     p_obs_skewed    = np.array([0.70, 0.10, 0.10, 0.10])
     result_moderate = calculate_surprise(p_model_uniform, p_obs_skewed, temperature=300.0)
     
-    print("\\nTest 3: Uniform model vs. skewed observations")
+    print("\nTest 3: Uniform model vs. skewed observations")
     print(f"  S_total:       {result_moderate['S_total']:.6f} bits")
     print(f"  W_min:         {result_moderate['W_min_joules']:.6e} J")
     assert 0 < result_moderate["S_total"] < result_divergent["S_total"], (
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     result_cold = calculate_surprise(p_model_peaked, p_obs_peaked, temperature=150.0)
     result_hot  = calculate_surprise(p_model_peaked, p_obs_peaked, temperature=600.0)
     
-    print("\\nTest 4: Landauer temperature scaling")
+    print("\nTest 4: Landauer temperature scaling")
     print(f"  W_min @ 150K:  {result_cold['W_min_joules']:.6e} J")
     print(f"  W_min @ 300K:  {result_divergent['W_min_joules']:.6e} J")
     print(f"  W_min @ 600K:  {result_hot['W_min_joules']:.6e} J")
@@ -227,6 +227,6 @@ if __name__ == "__main__":
     assert abs(ratio_hot  - 2.0) < 1e-6, f"W_min must double with 2x temperature (got {ratio_hot})"
     print("  PASSED (linear T scaling confirmed)")
 
-    print("\\n" + "=" * 60)
+    print("\n" + "=" * 60)
     print("All tests passed.")
     print("=" * 60)
